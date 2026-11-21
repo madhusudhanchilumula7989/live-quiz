@@ -465,3 +465,42 @@ docker logs nagios
 
 # Docker Compose status
 docker compose ps
+
+
+
+
+
+
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: vehicle-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: vehicledb
+      MYSQL_USER: vehicleuser
+      MYSQL_PASSWORD: vehicle123
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:latest
+    container_name: vehicle-wordpress
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: vehicleuser
+      WORDPRESS_DB_PASSWORD: vehicle123
+      WORDPRESS_DB_NAME: vehicledb
+    depends_on:
+      - db
+    volumes:
+      - wordpress_data:/var/www/html
+
+volumes:
+  db_data:
+  wordpress_data:
