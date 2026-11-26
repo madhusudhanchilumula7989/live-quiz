@@ -253,7 +253,99 @@ kubectl get nodes
 
 :: 29. Check cluster status
 minikube status
+# ==========================================
+# DOCKER COMPOSE - CUSTOM IMAGE + MYSQL
+# ==========================================
 
+# 1. Create docker-compose.yml
+# Add the following content:
+
+services:
+  app:
+    image: your-dockerhub-username/your-image:latest
+    container_name: my-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: studentdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+
+
+# 2. Pull images
+docker compose pull
+
+# 3. Start all containers in background
+docker compose up -d
+
+# 4. Check running containers
+docker compose ps
+
+# 5. View all logs
+docker compose logs
+
+# 6. View application logs
+docker compose logs -f app
+
+# 7. View database logs
+docker compose logs -f db
+
+# 8. Build custom image (if building locally)
+docker compose build
+
+# 9. Restart services
+docker compose restart
+
+# 10. Stop containers
+docker compose stop
+
+# 11. Start stopped containers
+docker compose start
+
+# 12. Stop and remove containers
+docker compose down
+
+# 13. Stop and remove containers + volumes
+docker compose down -v
+
+# 14. Validate compose file
+docker compose config
+
+# 15. Execute MySQL shell inside database container
+docker exec -it mysql-db mysql -uroot -proot
+
+# 16. List all containers
+docker ps -a
+
+# 17. List Docker images
+docker images
+
+# ==========================================
+# IMPORTANT VIVA POINTS
+# ==========================================
+# Service       : Application or database definition
+# Image         : Blueprint for creating a container
+# Container     : Running instance of an image
+# Ports         : Connect host port to container port
+# Volumes       : Persist database data
+# depends_on    : Defines service startup dependency
+# Environment   : Pass configuration variables
+# Database host : db
+# Database port : 3306
+# App port      : 8080
+# ==========================================
 
 
 Q1 (a) Functional and Non-Functional Requirements
