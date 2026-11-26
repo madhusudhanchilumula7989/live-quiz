@@ -348,6 +348,80 @@ docker images
 # ==========================================
 
 
+# ==========================================
+# KUBERNETES - NGINX WITH 2 REPLICAS
+# ==========================================
+
+# 1. Start Minikube
+minikube start
+
+# 2. Create deployment with 2 replicas
+kubectl create deployment nginx-deployment --image=nginx
+
+# 3. Scale deployment to 2 replicas
+kubectl scale deployment nginx-deployment --replicas=2
+
+# 4. Check deployments
+kubectl get deployments
+
+# 5. Check running pods
+kubectl get pods
+
+# 6. Expose deployment using NodePort
+kubectl expose deployment nginx-deployment --type=NodePort --port=80
+
+# 7. Check services
+kubectl get services
+
+# 8. Get detailed deployment information
+kubectl describe deployment nginx-deployment
+
+# 9. Get detailed pod information
+kubectl describe pods
+
+# 10. Open Nginx in browser (Minikube)
+minikube service nginx-deployment
+
+# 11. View logs
+kubectl logs deployment/nginx-deployment
+
+# 12. Delete service
+kubectl delete service nginx-deployment
+
+# 13. Delete deployment and its pods
+kubectl delete deployment nginx-deployment
+
+# 14. Stop Minikube
+minikube stop
+
+# ==========================================
+# IMPORTANT KUBECTL COMMANDS
+# ==========================================
+
+# List all pods
+kubectl get pods
+
+# List all deployments
+kubectl get deployments
+
+# List all services
+kubectl get services
+
+# List all resources
+kubectl get all
+
+# Scale to 3 replicas
+kubectl scale deployment nginx-deployment --replicas=3
+
+# Delete a pod
+kubectl delete pod <pod-name>
+
+# ==========================================
+
+
+
+
+
 Q1 (a) Functional and Non-Functional Requirements
 System: Food Ordering System
 
